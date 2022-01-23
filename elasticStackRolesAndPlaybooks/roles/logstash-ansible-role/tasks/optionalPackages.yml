@@ -1,0 +1,7 @@
+---
+- name: Optional packages - netstat
+  yum: name=net-tools state=present update_cache=yes
+
+- name: Optinal packages - mc
+  yum: name=mc state=present update_cache=yes
+

@@ -1,0 +1,9 @@
+- hosts: [filebeatHosts]
+  tasks:
+    - name: Start Filebeat service
+      service:
+        name: filebeat
+        state: started
+      become: true
+      become_user: root
+      become_method: sudo

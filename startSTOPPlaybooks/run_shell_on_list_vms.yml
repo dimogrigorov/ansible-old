@@ -1,0 +1,11 @@
+---
+#Possiebly with the Inventory
+- hosts: managed
+  become: false
+  strategy: free
+  gather_facts: no
+  tasks:
+    - name: Executing remotely the script  
+      script: "{{ script_path }} {{ script_params }}"
+...
+

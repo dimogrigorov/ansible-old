@@ -1,0 +1,14 @@
+---
+- hosts: alchemy2
+  become: false
+  strategy: debug
+  gather_facts: yes
+  tasks:
+    - name: Start VM by vmid
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy2
+        vmid        : "{{ vmid }}"
+        state       : started
+...

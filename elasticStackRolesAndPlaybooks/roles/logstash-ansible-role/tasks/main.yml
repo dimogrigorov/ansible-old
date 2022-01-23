@@ -1,0 +1,34 @@
+---
+- name: Install java
+  include: java.yml
+
+- name: Install optinal packages
+  include: optionalPackages.yml
+
+- name: Apply additional VM configuration
+  include: additionalSettings.yml
+
+- name: Include OS Specific setup tasks
+  include: setup-{{ ansible_os_family }}.yml
+
+- name: Copying the configured logstash.yml to /etc/logstash/logstash.yml
+  template:
+    src: logstash.yml.j2
+    dest: /etc/logstash/logstash.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copying the configured jvm.options to /etc/logstash/jvm.options
+  template:
+    src: jvm.options.j2
+    dest: /etc/logstash/jvm.options
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Ensure Logstash is started and enabled on boot.
+  service:
+    name: logstash
+    state: started
+    enabled: "{{ logstash_enabled_on_boot }}"

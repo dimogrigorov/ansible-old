@@ -1,0 +1,27 @@
+---
+# General properties
+logstash_enabled_on_boot: yes
+logstash_version: 6.1.1
+logstash_java_install: true
+update_java: true
+
+# JVM Options
+xmsx: 6g
+
+# Node settings
+node_name: ls-node-4
+path_settings: /etc/logstash
+path_data: /var/lib/logstash
+pipeline_unsafe_shutdown: "false"
+path_config: /etc/logstash/conf.d
+http_host: 10.5.203.201
+http_port: 9600
+log_level: error
+path_logs: /var/log/logstash
+pipeline_workers: 8
+pipeline_output_workers: 8
+pipeline_batch_size: 300
+pipeline_batch_delay: 5
+config_reload_automatic: "true"
+config_reload_interval: 1s
+config_debug: "true"

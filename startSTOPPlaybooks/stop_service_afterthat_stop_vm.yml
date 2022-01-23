@@ -1,0 +1,31 @@
+---
+#Possiebly with the Inventory
+- hosts: managed 
+  become: false
+  strategy: debug
+  tasks:
+  - name: Stopping elasticsearch service
+    service: name=elasticsearch state=stopped 
+    register: elasticstatus
+  - name: Check elasticsearch service status
+    debug:
+      msg: "{{ elasticstatus.state }}"
+- hosts: alchemy0
+  become: false
+  strategy: debug
+  #vars_files:
+  #  - hosts.yml
+  tasks:
+    - name: include variables
+      include_vars: vault.yml
+    - name: Stop VM
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy0
+        node        : alchemy0
+        name        : "{{ item }}"
+        state       : stopped
+      with_items: "{{ groups['managed'] }}"
+      #with_items: "{{ hosts }}"
+...

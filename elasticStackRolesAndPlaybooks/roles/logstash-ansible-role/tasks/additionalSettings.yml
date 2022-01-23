@@ -1,0 +1,4 @@
+---
+
+- hostname:
+    name: "{{ node_name }}"

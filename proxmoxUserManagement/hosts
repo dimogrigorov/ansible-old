@@ -1,0 +1,41 @@
+[alchemyNodes]
+alchemyNode ansible_user=root ansible_host=10.5.0.161
+
+[alchemyNodes:vars]
+#------------------------
+
+#(mandatory)
+password=hamburg
+#(mandatory)
+userId=hamburg
+#optional-in case 'groupWillBeCreated' is se to 'True'
+#In case it is what will happen:
+#1. new group will be created 
+#2. newly created user will be assigned to that group  
+#3. 'Object and paths' permissions-per-path(for the given role) will be set to that group
+#Ofcourse all the users that this group contains will get these permissions-per-path right away
+groupId=hamburgGroup
+#(mandatory), but will only create if it's not already existing. 
+#If you specidy new privileges and that role is already existing it is not going to
+#override these role privileges or dump and re-create the role. It will simply skip this step
+roleId=PVE_Test_Role
+
+#------------------------
+#The name of the storage that the user or group will have access to 
+storage=HDD-Storage
+#These are VMID range variables. For example: 
+#'fromVmid' 100 'toVmid' 105 means: 
+#for vmid-s 100, 101, 102, 103, 104, 105 
+#'objects and paths' privileges-per-path(for the given role) will be set for the particular user or group
+fromVmid=100
+toVmid=103
+vmidList='[100, 103]'
+#This will apply ONLY in case role is not existing and we are creating a brand new one.
+#If after we want to change that role privileges, we should do that maybe manually
+privilegesList="Datastore.Audit Sys.Audit VM.Audit"
+
+#------------------------
+vmidRangeWillBeUsed=False
+vmidListWillBeUsed=True
+groupWillBeCreated=True
+roleWillBeCreated=True

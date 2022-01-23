@@ -1,0 +1,22 @@
+node.name: {{ node_name }}
+
+pipeline.unsafe_shutdown: {{ pipeline_unsafe_shutdown }}
+
+http.host: "{{ http_host }}"
+http.port: {{ http_port }}
+
+pipeline.workers: {{ pipeline_workers }}
+pipeline.output.workers: {{ pipeline_output_workers }}
+pipeline.batch.size: {{ pipeline_batch_size }}
+pipeline.batch.delay: {{ pipeline_batch_delay }}
+
+config.reload.automatic: {{ config_reload_automatic }}
+config.reload.interval: {{ config_reload_interval }}
+config.debug: {{ config_debug }}
+
+path.data: {{ path_data }}
+path.logs: {{ path_logs }}
+path.config: {{ path_config }}
+path.settings: {{ path_settings }}
+
+log.level: {{ log_level }}
