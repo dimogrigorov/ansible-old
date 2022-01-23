@@ -1,0 +1,24 @@
+---
+
+- set_fact: java_state="present"
+
+- set_fact: java_state="latest"
+  when: update_java == true
+
+- name: RedHat - Ensure Java is installed
+  yum: name=java state={{ java_state }}
+  when: ansible_os_family == 'RedHat'
+
+- name: RedHat - refresh java repo
+  yum: update_cache=yes
+  changed_when: false
+  when: ansible_os_family == 'Debian'
+
+- name: Debian - refresh java repo
+  apt: update_cache=yes
+  changed_when: false
+  when: ansible_os_family == 'Debian'
+
+- name: Debian - Ensure Java is installed
+  apt: name=java state={{java_state}}
+  when: ansible_os_family == 'Debian'

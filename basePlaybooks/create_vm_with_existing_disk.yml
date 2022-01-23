@@ -1,0 +1,53 @@
+---
+#sucessful creation but Windows has trouble booting and ansible quits, possibly it needs less machine settings to change
+- hosts: alchemy0
+  become: false
+  strategy: debug
+  #gather_facts: yes
+  tasks:
+    - name: include variables
+      include_vars: vault.yml
+    - name: Install Python-PIP via APT
+      apt:
+        pkg=python-pip state=installed update_cache=true
+    - name: Install Requests via PIP
+      pip: 
+        name=requests
+    - name: Install Proxmoxer via PIP
+      pip:
+        name=proxmoxer
+    - name: Create a VM
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy0
+        name        : windows10
+        node        : alchemy0
+        vmid        : 2016
+        net         : '{"net0":"virtio,bridge=vmbr3"}'
+        virtio      : '{"scsi0":"HDD-Storage:2015/vm-2015-disk-1.qcow2"}'
+      register: outputCreateVM
+    - name: Get VM state
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy0
+        node        : alchemy0
+        vmid        : 2016
+        state       : current
+      register      : outputCurrentVM
+    # Get VM current MAC
+    - name: Get VM Status
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy0
+        node        : alchemy0
+        vmid        : 2016
+        state       : present
+        update      : False
+      register: proxmox
+    - name: debug output
+      debug:
+        msg: "{{ proxmox }}, {{ outputCreateVM.mac }}, {{ outputCurrentVM }}"
+...

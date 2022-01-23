@@ -1,0 +1,18 @@
+---
+#Possiebly with the Inventory
+- hosts: managed
+  become: true
+  become_user: "{{ become_user }}"
+  become_method: su
+  tasks:
+    - name: copy-sql-file
+      copy: 
+        src=./testFile.sql dest=/{{ become_user }}/testFile.sql
+    - name: Executing remotely 2 shell lines 
+      shell: | 
+        source {{ ORACLE_HOME }}/bin/oracle_env.sh
+        echo exit | sqlplus {{ ORACLE_USER }}/{{ ORACLE_PASSWORD }} @/{{ become_user }}/testFile
+    - name: delete-file
+      file: path="/{{ become_user }}/testFile.sql" state=absent
+...
+

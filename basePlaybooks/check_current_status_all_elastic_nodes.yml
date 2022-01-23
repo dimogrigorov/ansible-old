@@ -1,0 +1,21 @@
+---
+- hosts: alchemy2
+  become: false
+  strategy: debug
+  gather_facts: yes
+  vars_files:
+    - host_list.yml
+    - vars/vault.yml
+  tasks:
+#    - name: include variables
+#      include_vars: vault.yml
+    - name: Check VM
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy2
+        node        : alchemy2
+        vmid        : "{{ item }}"  
+        state       : current
+      with_items: "{{ host_from_list }}" 
+...

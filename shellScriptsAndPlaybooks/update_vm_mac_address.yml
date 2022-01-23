@@ -1,0 +1,16 @@
+---
+- hosts: alchemy2
+  become: false
+  strategy: debug
+  vars_files:
+    - ../vars/vault.yml
+  tasks:
+    - proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy2
+        node        : alchemy2
+        vmid        : '{{ vmid }}'
+        update      : yes
+        net         : '{"net0":"virtio={{ macaddress }}"}'
+...

@@ -1,0 +1,13 @@
+---
+logstash_enabled_on_boot: yes
+logstash_version: 6.1.1
+node_name: ls-node-0
+path_data: /var/lib/logstash
+pipeline_unsafe_shutdown: false
+path_config: /etc/logstash/conf.d
+http_host: 10.5.203.214
+http_port: 9600
+log_level: error
+path_logs: /var/log/logstash
+logstash_java_install: true
+update_java: true

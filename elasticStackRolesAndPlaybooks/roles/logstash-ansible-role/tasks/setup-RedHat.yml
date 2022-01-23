@@ -1,0 +1,15 @@
+---
+- name: Add Elasticsearch GPG key.
+  rpm_key:
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Logstash repository.
+  copy:
+    src: elastic.repo
+    dest: /etc/yum.repos.d/elastic.repo
+    mode: 0644
+
+- name: Install Logstash.
+  yum: name=logstash{% if logstash_version is defined and logstash_version != ""  %}-{{ logstash_version }}{% endif %} state=present update_cache=yes
+

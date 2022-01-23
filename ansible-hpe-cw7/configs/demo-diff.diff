@@ -1,0 +1,17 @@
+#######################################
+########## SUMMARY OF DIFFS ###########
+#######################################
+
+
+
+
+
+#######################################
+FULL DIFFS AS RETURNED BACK FROM SWITCH
+#######################################
+
+
+<EEEED>display diff current-configuration configfile demo.cfg
+               ^
+ % Unrecognized command found at '^' position.
+
