@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: root
+#  strategy: debug
+#  gather_facts: yes
+  tasks:
+  - name: include variables
+    include_vars:
+      dir: 'vars'
+  # - name: Wait a bit time is ticking too fast
+  #   pause:
+  #     seconds: 1
+  - name: Output some messages
+    debug:
+      msg: "Vaultpass: {{ VAULT_PASSWORD }}, UserID: {{ USER_ID }}, Commit: {{ COMMIT }}, Keys: {{ KEYS }}"
+  - name: Output some other messages
+    debug:
+      msg: "DHCP-Server {{ userID }} vmid={{ dhcpTemplateVmid }} newid={{ newDhcpVmid }} dhcp_template={{ template_name }}"
+
+##Include Task: Deploy DHCP from template
+  - include: tasks/linked_clone_vm_from_template.yml new_machine_name="DHCP-Server-{{ userID }}" newid="{{ newDhcpVmid }}" template_name="{{ dhcp_template }}"
+...

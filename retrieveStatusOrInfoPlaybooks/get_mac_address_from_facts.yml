@@ -1,0 +1,13 @@
+
+- hosts: 10.5.203.218
+  become: false
+  strategy: debug
+  gather_facts: yes
+  tasks:
+    - name: debug output
+      debug:
+              msg: "{{ hostvars[inventory_hostname]['ansible_eth0']['macaddress'] }}"
+    - name: debug2 output
+      debug:
+              msg: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['macaddress'] }}"
+...

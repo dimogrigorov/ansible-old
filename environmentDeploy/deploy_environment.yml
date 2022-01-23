@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: root
+  strategy: debug
+#  gather_facts: yes
+  tasks:
+  - name: include variables
+    include_vars: 
+      dir: 'vars'
+  - name: Wait a bit time is ticking too fast
+    pause:
+      seconds: 1
+  - name: Output some messages
+    debug:
+      msg: "Vaultpass: {{ VAULT_PASSWORD }}, UserID: {{ USER_ID }}, Commit: {{ COMMIT }}, Keys: {{ KEYS }}"
+...
+

@@ -1,0 +1,8 @@
+---
+VAULT_PASSWORD: fake
+USER_ID: fakeUSER_ID
+COMMIT: 12345678
+KEYS: ArePublic
+...
+
+

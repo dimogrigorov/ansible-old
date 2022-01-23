@@ -1,0 +1,21 @@
+---
+#Possiebly with the Inventory
+- hosts: alchemy0
+  become: false
+  strategy: free
+  gather_facts: no
+  vars_files:
+    - host_list.yml
+    - ../vars/vault.yml
+  tasks:
+    - name: Checking VM statuses
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy0
+        node        : alchemy0
+        vmid        : "{{ item }}"
+        state       : current
+      #with_items    : "{{ groups['managed'] }}"
+      with_items: "{{ host_from_list }}"
+...

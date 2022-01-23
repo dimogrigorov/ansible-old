@@ -1,0 +1,11 @@
+---
+- hosts: "{{ alchemy_node }}"
+  become: false
+  tasks:  
+  - name: Registering ipaddress..
+    shell: pvesh get /nodes/alchemy2/qemu/{{ vmid }}/config
+    register: vmconfig
+  - name: output something
+    debug:
+      msg: "{{ vmconfig  }}"   
+...

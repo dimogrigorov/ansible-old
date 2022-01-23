@@ -1,0 +1,31 @@
+---
+# Stopping DHCP, Inserting the MAC and an IP into the Config and Start DHCP again
+# TBD: Handlers
+#    Handlers are just like regular tasks in an Ansible playbook (see Tasks) but are only run if the Task contains a notify directive and also indicates that it changed something. For example, if a config file is changed, then the task referencing the config file templating operation may notify a service restart handler. This means services can be bounced only if they need to be restarted. Handlers can be used for things other than service restarts, but service restarts are the most common usage. from:http://docs.ansible.com/ansible/latest/glossary.html
+- hosts: "{{ dhcpHostIp }}"
+  become: false
+  tasks:
+  - name: Waiting for system to become reachable...
+    wait_for_connection:
+  - name: Stopping dhcp service..
+    service: name=dhcpd state=stopped
+    register: dhcpserverstopped
+  - name: Check dhcp service status
+    debug:
+      msg: "{{ dhcpserverstopped.state }}"
+  - name: Inserting new entry in dhcpd.conf with the MAC and desired IP address
+    blockinfile:
+      path: /etc/dhcp/dhcpd.conf
+      block: |
+              host {{ uniqueDhcpName }} {
+                fixed-address {{ ipaddress }};
+                hardware ethernet {{ macaddress }};
+                option host-name {{ uniqueDhcpName }}; #unique name that dhcp will use to talk to host
+              }
+  - name: Starting dhcp service
+    service: name=dhcpd state=started
+    register: dhcpserverstarted
+  - name: Check dhcp service status again
+    debug:
+      msg: "{{ dhcpserverstarted.state }}"
+...

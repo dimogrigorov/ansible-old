@@ -1,0 +1,17 @@
+---
+- hosts: "{{ alchemy_node }}"
+  become: false
+  gather_facts: no
+  vars_files:
+  #  - hosts.yml
+    - ../vars/vault.yml  
+  tasks:
+    - name: Start VM
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : alchemy2
+        node        : alchemy2
+        vmid        : "{{ vmid }}"
+        state       : started
+...

@@ -1,0 +1,31 @@
+
+- hosts: "{{ alchemy_node }}"
+  become: false
+  strategy: debug
+  #gather_facts: yes
+  tasks:
+    - name: include variables
+      include_vars: ../vars/vault.yml
+    - name: Clone a VM via template
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: "{{ alchemy_password }}"
+        api_host    : "{{ alchemy_node }}"
+        clone       : "{{ template_name }}" # in case you are cloning a VM(not from a template) the value here does not matter but SHOULD be set to something
+        vmid        : "{{ vmid }}"  # only needed if you are cloning from an existing VM. If you use it 'clone' tag is kind of ignored. You will do VM clone, not template clone!
+        newid       : "{{ newid }}" # you can omit that I think and proxmox will simply take the next available vmid
+        name        : "{{ new_machine_name }}"  # The target VM or template name
+        node        : alchemy2
+        full        : no
+        storage     : HDD-Storage
+        #format      : qcow2
+        #timeout     : 600  # Note: The task can take a while. Adapt
+        #cores       : 2
+        #memory      : 4096
+        #pool        : # the pool that the new VM will reside to
+        #virtio        : '{"virtio[0]":"HDD-Storage:10,format=qcow2"}' #probably could only be used if you are not cloning a VM or a template, but creating 
+        #net         : '{"net0":"virtio,bridge=vmbr3"}'
+    - name: Wait a bit for the Hypervisor to catch up
+      pause:
+        seconds: 1
+...

@@ -1,0 +1,11 @@
+---
+- hosts: alchemy2
+  become: false
+  strategy: debug
+  gather_facts: yes
+  tasks:
+    - name: include variables
+      include_vars: vault.yml
+    - name: Dump
+      debug: msg="tester is {{ alchemy_password }}"
+...

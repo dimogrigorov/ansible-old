@@ -1,0 +1,22 @@
+---
+## USERInfo:
+userID: Extern
+#vmidRange: 2200-2220
+
+
+dhcp_template: 2eth-template
+template_name: 2eth-template
+
+## EnvironmentInfo:
+#clusternode: {{ clusterFromInventory }}
+dhcpHostIp: 10.5.200.55
+ipaddress: 192.168.1.2
+
+## Templates:
+dhcpTemplateVmid: 30000
+centosTemplateVmid: 20000
+
+## VM's IDs to be created:
+newDhcpVmid: 2001
+newCentosVmid: 2200
+...

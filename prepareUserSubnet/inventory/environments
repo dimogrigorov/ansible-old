@@ -1,0 +1,35 @@
+---
+# Declaring Environment groups
+# see: http://allandenot.com/devops/2015/01/16/ansible-with-multiple-inventory-files.html
+
+
+# Attaching as children
+[all:vars]
+ansible_user=root
+
+[sofia_dev]
+alchemy0 ansible_host=10.5.0.138
+alchemy1 ansible_host=10.5.0.161
+alchemy2 ansible_host=10.5.0.162
+
+[sofia_dev:vars]
+storage=Cometari
+clusternode=alchemy2
+
+[sofia_lab]
+alchemy0-lab ansible_host=10.5.200.138
+alchemy1-lab ansible_host=10.5.200.161
+alchemy2-lab ansible_host=10.5.200.162
+
+[sofia_lab:vars]
+storage=Cometari
+clusternode=alchemy2
+
+[home_lab]
+pve-ceph0 ansible_host=10.0.10.110
+pve-ceph1 ansible_host=10.0.10.111
+pve-ceph2 ansible_host=10.0.10.112
+
+[home_lab:vars]
+storage=NAS
+clusternode=pve-ceph2
